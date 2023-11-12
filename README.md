@@ -1,4 +1,5 @@
 ### ScriptableObjectsCreator Window Editor Tool
+[ScriptableObjectsCreatorWindow Script](Assets/Editor/ScriptableObjectsCreatorWindow.cs)
 
 ## Description
 ScriptableObjectsCreatorWindow is a Unity Editor tool designed to streamline the creation of ScriptableObject scripts.
