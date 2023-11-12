@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public class ScriptableObjectsCreatorWindow : EditorWindow
 {
@@ -92,12 +93,14 @@ public class ScriptableObjectsCreatorWindow : EditorWindow
     private bool IsMenuNameDuplicate(string menuNameToCheck)
     {
         string[] allScripts = Directory.GetFiles(Application.dataPath, "*.cs", SearchOption.AllDirectories);
+        string pattern = @"\[CreateAssetMenu\(.*menuName\s*=\s*""" + Regex.Escape(menuNameToCheck) + @""".*\)\]";
 
         foreach (string scriptPath in allScripts)
         {
             string scriptContent = File.ReadAllText(scriptPath);
-            if (scriptContent.Contains("[CreateAssetMenu(") && scriptContent.Contains("menuName = \"" + menuNameToCheck + "\""))
+            if (Regex.IsMatch(scriptContent, pattern))
             {
+                Debug.Log("Duplicate menuName found in script: " + scriptPath);
                 return true;
             }
         }
